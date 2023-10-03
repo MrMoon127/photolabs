@@ -16,7 +16,8 @@ const App = () => {
     selectPhoto,
     selectTopic,
     toggleFav,
-    toggleModal
+    toggleModal,
+    setPhotoData
   } = useApplicationData();
 
   return (
@@ -28,6 +29,7 @@ const App = () => {
       toggleModal={toggleModal}
       selectPhoto={selectPhoto}
       selectTopic={selectTopic}
+      setPhotoData={setPhotoData}
       selectedTopic={state.selectedTopic}
       favPhotoIds={state.favPhotoIds}
       toggleFav={toggleFav}

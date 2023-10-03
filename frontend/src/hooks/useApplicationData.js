@@ -76,7 +76,8 @@ const useApplicationData = () => {
     selectPhoto,
     selectTopic,
     toggleFav,
-    toggleModal
+    toggleModal,
+    setPhotoData
   };
 };
 

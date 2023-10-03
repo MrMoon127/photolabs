@@ -6,18 +6,31 @@ import FavIcon from './FavIcon';
 import FavBadge from './FavBadge';
 
 const TopNavigation = (props) => {
-  const isFavPhotoExist = props.favPhotoIds.length > 0;
+  const { photos, topics, actions, selectTopic, setPhotoData, selectedTopic, favPhotoIds } = props
+
+  const isFavPhotoExist = favPhotoIds.length > 0;
+
+  const favPhotos = (photos || []).filter((photo) => favPhotoIds.includes(photo.id))
+
+  console.log(favPhotos);
+
+  const clickFavBadge = () => {
+    setPhotoData({ type: actions.SET_PHOTO_DATA, payload: favPhotos})
+  }
 
   return (
     <div className="top-nav-bar">
       <span className="top-nav-bar__logo">PhotoLabs</span>
       <TopicList 
-      topics={props.topics} 
-      actions={props.actions}
-      selectTopic={props.selectTopic} 
-      selectedTopic={props.selectedTopic}
+      topics={topics} 
+      actions={actions}
+      selectTopic={selectTopic} 
+      selectedTopic={selectedTopic}
       />
-      <FavBadge isFavPhotoExist={isFavPhotoExist}/>
+      <FavBadge 
+      clickFavBadge={clickFavBadge}
+      isFavPhotoExist={isFavPhotoExist}
+      />
     </div>
   )
 }
