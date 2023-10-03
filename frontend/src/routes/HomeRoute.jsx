@@ -9,6 +9,9 @@ const HomeRoute = (props) => {
     <div className="home-route">
       <TopNavigation 
       topics={props.topics} 
+      actions={props.actions}
+      selectTopic={props.selectTopic}
+      selectedTopic={props.selectedTopic}
       favPhotoIds={props.favPhotoIds}
       />
       <PhotoList 

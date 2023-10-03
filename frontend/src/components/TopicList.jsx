@@ -3,27 +3,25 @@ import React from "react";
 import "../styles/TopicList.scss";
 import TopicListItem from "./TopicListItem";
 
-const sampleDataForTopicList = [
-  {
-    id: "1",
-    slug: "topic-1",
-    title: "Nature",
-  },
-  {
-    id: "2",
-    slug: "topic-2",
-    title: "Travel",
-  },
-  {
-    id: "3",
-    slug: "topic-3",
-    title: "People",
-  },
-];
-
 const TopicList = (props) => {
-  const topicList = props.topics.map((topic) => (
-    <TopicListItem {...topic} key={topic.id} />
+  const { topics, actions, selectTopic, selectedTopic } = props
+
+  const clickTopic = (id) => {
+    let setId = id;
+
+    if (selectedTopic && selectedTopic.id === id) {
+      setId = 0;
+    }
+
+    selectTopic({ type: actions.SELECT_TOPIC, array: topics, id: setId})
+  }
+
+  const topicList = (props.topics || []).map((topic) => (
+    <TopicListItem 
+    {...topic} 
+    key={topic.id} 
+    clickTopic={ () => clickTopic(topic.id) } 
+    />
   ));
 
   return (

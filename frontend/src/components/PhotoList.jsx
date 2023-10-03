@@ -15,7 +15,7 @@ const PhotoList = (props) => {
     toggleFav({type: actions.FAV_PHOTO_TOGGLE, id: id})
   }
 
-  const photoList = photos.map((photo) => (
+  const photoList = (photos || []).map((photo) => (
     <PhotoListItem
     favPhotoIds={favPhotoIds}
     {...photo}

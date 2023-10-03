@@ -6,21 +6,29 @@ const useApplicationData = () => {
     FAV_PHOTO_TOGGLE: 'FAV_PHOTO_TOGGLE',
     SET_PHOTO_DATA: 'SET_PHOTO_DATA',
     SET_TOPIC_DATA: 'SET_TOPIC_DATA',
+    SELECT_TOPIC: 'SELECT_TOPIC',
     SELECT_PHOTO: 'SELECT_PHOTO',
     TOGGLE_MODAL: 'TOGGLE_MODAL'
   }
   
   const [favPhotoIds, toggleFav] = useReducer(reducer, []);
   const [selectedPhoto, selectPhoto] = useReducer(reducer, 0);
+  const [selectedTopic, selectTopic] = useReducer(reducer, undefined);
   const [openModal, toggleModal] = useReducer(reducer, false);
   const [photoData, setPhotoData] = useReducer(reducer, []);
   const [topicData, setTopicData] = useReducer(reducer, []);
   
   useEffect(() => {
-    fetch("/api/photos")
-      .then((response) => response.json())
-      .then((data) => setPhotoData({ type: ACTIONS.SET_PHOTO_DATA, payload: data }))
-  }, []);
+    if (selectedTopic) {
+      fetch(`/api/topics/photos/${selectedTopic.id}`)
+        .then(res => res.json())
+        .then((data) => setPhotoData({ type: ACTIONS.SET_PHOTO_DATA, payload: data}))
+    } else {
+      fetch("/api/photos")
+        .then((response) => response.json())
+        .then((data) => setPhotoData({ type: ACTIONS.SET_PHOTO_DATA, payload: data }))
+    }
+  }, [selectedTopic]);
 
   useEffect(() => {
     fetch("/api/topics")
@@ -42,6 +50,8 @@ const useApplicationData = () => {
         return { ...state, topicData: action.payload };
       case 'SELECT_PHOTO':
         return action.array.find((photo) => (photo.id === action.id));
+      case 'SELECT_TOPIC':
+        return action.array.find((topic) => (topic.id === action.id));
       case 'TOGGLE_MODAL':
         return !state;
       default:
@@ -54,6 +64,7 @@ const useApplicationData = () => {
   const state = {
     ACTIONS,
     selectedPhoto,
+    selectedTopic,
     openModal,
     favPhotoIds,
     photoData,
@@ -63,6 +74,7 @@ const useApplicationData = () => {
   return {
     state,
     selectPhoto,
+    selectTopic,
     toggleFav,
     toggleModal
   };

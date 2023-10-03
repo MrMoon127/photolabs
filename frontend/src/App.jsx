@@ -14,6 +14,7 @@ const App = () => {
   const {
     state,
     selectPhoto,
+    selectTopic,
     toggleFav,
     toggleModal
   } = useApplicationData();
@@ -22,16 +23,18 @@ const App = () => {
     <div className="App home-route">
       <HomeRoute 
       actions={state.ACTIONS}
-      topics={topics} 
-      photos={photos} 
+      topics={state.topicData ? state.topicData.topicData : []} 
+      photos={state.photoData ? state.photoData.photoData : []} 
       toggleModal={toggleModal}
       selectPhoto={selectPhoto}
+      selectTopic={selectTopic}
+      selectedTopic={state.selectedTopic}
       favPhotoIds={state.favPhotoIds}
       toggleFav={toggleFav}
       />
       {state.openModal && <PhotoDetailsModal 
       actions={state.ACTIONS}
-      photos={photos}
+      photos={state.photoData ? state.photoData.photoData : []}
       toggleModal={toggleModal}
       selectPhoto={selectPhoto}
       selectedPhoto={state.selectedPhoto}
